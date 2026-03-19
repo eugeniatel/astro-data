@@ -20,12 +20,9 @@ describe('eclipticToScreenAngle', () => {
     expect(angle).toBeCloseTo(0, 1);
   });
 
-  it('MC (90 degrees ahead of ASC in ecliptic) maps to top area', () => {
-    // If ASC is at 100, then 100 + 90 = 190 would be near the top
-    // But MC isn't always 90 degrees from ASC. Test the math:
-    // offset = 100 - 10 = 90 degrees ahead
-    const angle = eclipticToScreenAngle(10, 100);
-    // offset = 90 -> angle = PI + 90 * PI/180 = PI + PI/2 = 3PI/2 (top)
+  it('a point 90 degrees after ASC maps to bottom (counter-clockwise)', () => {
+    // longitude = ASC + 90 => offset = 90, angle = PI + PI/2 = 3PI/2 (bottom)
+    const angle = eclipticToScreenAngle(190, 100);
     expect(angle).toBeCloseTo(3 * Math.PI / 2, 1);
   });
 

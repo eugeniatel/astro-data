@@ -70,7 +70,8 @@ const EMPTY = ' ';
 // Zodiac runs counter-clockwise on the wheel.
 export function eclipticToScreenAngle(longitude: number, ascendant: number): number {
   // How far this longitude is from the ascendant, in degrees
-  const offset = ascendant - longitude;
+  // Zodiac goes counter-clockwise on the wheel
+  const offset = longitude - ascendant;
   // Convert to radians and shift so ASC is at PI (9 o'clock / left side)
   const angle = Math.PI + (offset * Math.PI) / 180;
   // Normalize to [0, 2*PI)

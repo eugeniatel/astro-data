@@ -25,8 +25,9 @@ const PLANET_GLYPHS: Record<string, string> = {
 };
 
 // Convert ecliptic longitude to screen angle (ASC at 9 o'clock = PI)
+// Zodiac goes counter-clockwise on the wheel
 function eclipticToAngle(longitude: number, ascendant: number): number {
-  return Math.PI + ((ascendant - longitude) * Math.PI) / 180;
+  return Math.PI + ((longitude - ascendant) * Math.PI) / 180;
 }
 
 export function renderWheelCanvas(chartData: ChartData, size: number = 600): HTMLCanvasElement {
