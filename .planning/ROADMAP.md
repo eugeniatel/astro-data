@@ -12,7 +12,7 @@ Gachi Pachi is a browser-only, terminal-aesthetic natal chart and transit tool. 
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Ephemeris Engine** - Accurate planetary calculations, house cusps, aspects, geocoding, and structured JSON output validated against a known reference chart
+- [x] **Phase 1: Ephemeris Engine** - Accurate planetary calculations, house cusps, aspects, geocoding, and structured JSON output validated against a known reference chart
 - [ ] **Phase 2: ASCII Wheel Renderer** - Custom ASCII circular chart wheel built and validated in isolation with hardcoded test data
 - [ ] **Phase 3: Natal Chart Screen** - Full natal chart view wired to live data: Big Three header, split layout, planet table, aspect table
 - [ ] **Phase 4: People Management** - Terminal-style birth data entry flow, localStorage persistence, and the saved people list
@@ -35,12 +35,12 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 6 plans
 
 Plans:
-- [ ] 01-01-PLAN.md -- Project scaffold: Vite + TypeScript + swisseph-wasm + vitest setup
-- [ ] 01-02-PLAN.md -- Type contracts: ChartData, Person, PlanetPosition, Aspect, all Phase 1 interfaces
-- [ ] 01-03-PLAN.md -- Ephemeris core: swisseph-wasm wrapper, Julian Day, planet positions, Placidus houses
-- [ ] 01-04-PLAN.md -- Aspect detection: pure function, all 6 aspects, orb rules, luminary bonus
-- [ ] 01-05-PLAN.md -- Geocoding pipeline: Photon (primary), cities.json fallback, manual entry
-- [ ] 01-06-PLAN.md -- ChartData assembler: wires all modules, integration test against Einstein chart
+- [x] 01-01-PLAN.md -- Project scaffold: Vite + TypeScript + swisseph-wasm + vitest setup
+- [x] 01-02-PLAN.md -- Type contracts: ChartData, Person, PlanetPosition, Aspect, all Phase 1 interfaces
+- [x] 01-03-PLAN.md -- Ephemeris core: swisseph-wasm wrapper, Julian Day, planet positions, Placidus houses
+- [x] 01-04-PLAN.md -- Aspect detection: pure function, all 6 aspects, orb rules, luminary bonus
+- [x] 01-05-PLAN.md -- Geocoding pipeline: Photon (primary), cities.json fallback, manual entry
+- [x] 01-06-PLAN.md -- ChartData assembler: wires all modules, integration test against Einstein chart
 
 ### Phase 2: ASCII Wheel Renderer
 **Goal**: A visually correct ASCII chart wheel can render any ChartData input, validated in isolation before integration with live data
@@ -116,7 +116,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Ephemeris Engine | 0/6 | Planned | - |
+| 1. Ephemeris Engine | 6/6 | Complete | 2026-03-19 |
 | 2. ASCII Wheel Renderer | 0/TBD | Not started | - |
 | 3. Natal Chart Screen | 0/TBD | Not started | - |
 | 4. People Management | 0/TBD | Not started | - |

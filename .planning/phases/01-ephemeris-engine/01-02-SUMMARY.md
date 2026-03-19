@@ -74,7 +74,13 @@ Each task was committed atomically:
 
 1. Task 1: Create src/engine/types.ts with all Phase 1 type contracts - `c15b970` (feat)
 
-Plan metadata: (docs commit -- see final commit)
+Plan metadata: `bb5e25d` (docs: complete type-contracts plan)
+
+## Self-Check: PASSED
+
+- FOUND: src/engine/types.ts
+- FOUND: c15b970 (feat commit)
+- FOUND: bb5e25d (docs metadata commit)
 
 ## Files Created/Modified
 - `src/engine/types.ts` - Central type contracts for calculation engine and geocoding pipeline; 16 exported symbols
