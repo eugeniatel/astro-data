@@ -89,13 +89,43 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| (populated during roadmap creation) | | |
+| CALC-01 | Phase 1 | Pending |
+| CALC-02 | Phase 1 | Pending |
+| CALC-03 | Phase 1 | Pending |
+| CALC-04 | Phase 1 | Pending |
+| CALC-05 | Phase 1 | Pending |
+| CALC-06 | Phase 1 | Pending |
+| CALC-07 | Phase 1 | Pending |
+| CHART-01 | Phase 2 | Pending |
+| CHART-02 | Phase 3 | Pending |
+| CHART-03 | Phase 3 | Pending |
+| CHART-04 | Phase 3 | Pending |
+| CHART-05 | Phase 3 | Pending |
+| UX-04 | Phase 4 | Pending |
+| UX-05 | Phase 4 | Pending |
+| UX-06 | Phase 4 | Pending |
+| INTERP-01 | Phase 5 | Pending |
+| INTERP-02 | Phase 5 | Pending |
+| INTERP-03 | Phase 5 | Pending |
+| INTERP-04 | Phase 5 | Pending |
+| TRANS-01 | Phase 6 | Pending |
+| TRANS-02 | Phase 6 | Pending |
+| TRANS-03 | Phase 6 | Pending |
+| TRANS-04 | Phase 6 | Pending |
+| TRANS-05 | Phase 6 | Pending |
+| UX-01 | Phase 7 | Pending |
+| UX-02 | Phase 7 | Pending |
+| UX-03 | Phase 7 | Pending |
+| UX-07 | Phase 7 | Pending |
+| UX-08 | Phase 7 | Pending |
+| UX-09 | Phase 7 | Pending |
+| UX-10 | Phase 7 | Pending |
 
 **Coverage:**
-- v1 requirements: 27 total
-- Mapped to phases: 0
-- Unmapped: 27
+- v1 requirements: 31 total
+- Mapped to phases: 31
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-19*
-*Last updated: 2026-03-19 after initial definition*
+*Last updated: 2026-03-19 after roadmap creation*
