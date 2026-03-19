@@ -29,7 +29,13 @@ const CUSP_LABEL_RADIUS = 9; // where house numbers go
 // Multiply column offset by this to make circles round.
 const ASPECT_RATIO = 2.0;
 
-// Zodiac sign abbreviations (3 chars each, fits in tight spaces)
+// Zodiac sign symbols + abbreviations
+const SIGN_SYMBOLS: Record<string, string> = {
+  Aries: '\u2648', Taurus: '\u2649', Gemini: '\u264A', Cancer: '\u264B',
+  Leo: '\u264C', Virgo: '\u264D', Libra: '\u264E', Scorpio: '\u264F',
+  Sagittarius: '\u2650', Capricorn: '\u2651', Aquarius: '\u2652', Pisces: '\u2653',
+};
+
 const SIGN_ABBREV: Record<string, string> = {
   Aries: 'Ari', Taurus: 'Tau', Gemini: 'Gem', Cancer: 'Can',
   Leo: 'Leo', Virgo: 'Vir', Libra: 'Lib', Scorpio: 'Sco',
@@ -131,29 +137,32 @@ function drawCuspLine(
   angle: number,
   innerR: number,
   outerR: number,
+  char: string = '\u2502', // │ (vertical box-drawing for visibility)
 ): void {
   // Draw a line from inner radius to outer radius at the given angle
-  const steps = Math.round((outerR - innerR) * 2);
+  const steps = Math.round((outerR - innerR) * 3);
   for (let i = 0; i <= steps; i++) {
     const r = innerR + (outerR - innerR) * (i / steps);
     const { row, col } = polarToGrid(angle, r);
     if (!isOccupied(grid, row, col)) {
-      setChar(grid, row, col, RING_CHAR);
+      setChar(grid, row, col, char);
     }
   }
 }
 
 function placeSignLabels(grid: string[][], ascendant: number): void {
-  // Place zodiac sign abbreviations at the midpoint of each 30-degree segment
+  // Place zodiac symbol + abbreviation at the midpoint of each 30-degree segment
   for (let i = 0; i < 12; i++) {
     const signName = ZODIAC_SIGNS[i];
+    const symbol = SIGN_SYMBOLS[signName];
     const abbrev = SIGN_ABBREV[signName];
+    const label = `${symbol}${abbrev}`;
     // Midpoint of this sign: (i * 30) + 15 degrees ecliptic
     const midLongitude = i * 30 + 15;
     const angle = eclipticToScreenAngle(midLongitude, ascendant);
     const { row, col } = polarToGrid(angle, SIGN_RADIUS);
-    // Center the 3-char abbreviation
-    setString(grid, row, col - 1, abbrev);
+    // Center the 4-char label
+    setString(grid, row, col - 2, label);
   }
 }
 
@@ -162,7 +171,7 @@ function placeSignBoundaries(grid: string[][], ascendant: number): void {
   for (let i = 0; i < 12; i++) {
     const boundaryLongitude = i * 30; // 0 Aries, 30 Taurus, etc.
     const angle = eclipticToScreenAngle(boundaryLongitude, ascendant);
-    drawCuspLine(grid, angle, SIGN_RADIUS + 1, OUTER_RADIUS);
+    drawCuspLine(grid, angle, SIGN_RADIUS + 1, OUTER_RADIUS, RING_CHAR);
   }
 }
 
@@ -173,8 +182,8 @@ function placeHouseCusps(
 ): void {
   for (const cusp of houses) {
     const angle = eclipticToScreenAngle(cusp.longitude, ascendant);
-    // Draw cusp line from center area to inner ring
-    drawCuspLine(grid, angle, CUSP_LABEL_RADIUS + 1, INNER_RADIUS);
+    // Full radial line from center to outer ring (like image 9: pie-slice dividers)
+    drawCuspLine(grid, angle, 2, OUTER_RADIUS, '\u00B7');
   }
 }
 
