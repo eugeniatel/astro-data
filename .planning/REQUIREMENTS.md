@@ -9,13 +9,13 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Calculations
 
-- [ ] **CALC-01**: User can enter birth date (day/month/year), time, city, and country
+- [x] **CALC-01**: User can enter birth date (day/month/year), time, city, and country
 - [ ] **CALC-02**: App geocodes city/country to latitude, longitude, and IANA timezone
 - [ ] **CALC-03**: Manual lat/lon/timezone fallback if geocoding fails or is offline
 - [x] **CALC-04**: Swiss Ephemeris WASM calculates positions for all 10 planets (Sun through Pluto)
 - [ ] **CALC-05**: Placidus house cusps calculated from birth data
 - [ ] **CALC-06**: Aspect calculations for 6 major aspects (conjunction, sextile, square, trine, quincunx, opposition) with standard orbs
-- [ ] **CALC-07**: Structured JSON data output of all chart data (AI-readable)
+- [x] **CALC-07**: Structured JSON data output of all chart data (AI-readable)
 
 ### Chart Display
 
@@ -89,13 +89,13 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| CALC-01 | Phase 1 | Pending |
+| CALC-01 | Phase 1 | Complete |
 | CALC-02 | Phase 1 | Pending |
 | CALC-03 | Phase 1 | Pending |
 | CALC-04 | Phase 1 | Complete |
 | CALC-05 | Phase 1 | Pending |
 | CALC-06 | Phase 1 | Pending |
-| CALC-07 | Phase 1 | Pending |
+| CALC-07 | Phase 1 | Complete |
 | CHART-01 | Phase 2 | Pending |
 | CHART-02 | Phase 3 | Pending |
 | CHART-03 | Phase 3 | Pending |
