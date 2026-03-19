@@ -4,7 +4,7 @@
 
 import type { ChartData } from '../engine/types';
 import type { TransitData } from '../engine/transits';
-import { getAspectText } from '../data/interpretations';
+import { getTransitText } from '../data/interpretations';
 // Aspect type symbols (same as tables.ts)
 const ASPECT_SYMBOLS: Record<string, string> = {
   conjunction: '\u260C',
@@ -39,11 +39,9 @@ export function renderTransitList(transitData: TransitData): string {
     const typeName = a.type.charAt(0).toUpperCase() + a.type.slice(1);
     lines.push(`  Transit ${a.planet1} ${sym} ${typeName} Natal ${a.planet2} (${a.orb.toFixed(1)} deg)`);
 
-    // Add interpretation
-    const interp = getAspectText(a.type);
-    if (interp) {
-      lines.push(`    ${interp}`);
-    }
+    // Add planet-pair specific interpretation
+    const interp = getTransitText(a.planet1, a.planet2, a.type);
+    lines.push(`    ${interp}`);
     lines.push('');
   }
 

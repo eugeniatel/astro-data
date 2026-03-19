@@ -283,6 +283,65 @@ const ASPECT_TEXTS: Record<string, string> = {
 };
 
 // ---------------------------------------------------------------------------
+// Transit interpretations (planet-pair specific)
+// ---------------------------------------------------------------------------
+
+// What each transiting planet activates
+const TRANSIT_PLANET: Record<string, string> = {
+  Sun: 'illuminates and energizes',
+  Moon: 'stirs emotions around',
+  Mercury: 'brings mental focus to',
+  Venus: 'softens and attracts around',
+  Mars: 'pushes for action in',
+  Jupiter: 'expands and opens up',
+  Saturn: 'tests and solidifies',
+  Uranus: 'disrupts and awakens',
+  Neptune: 'dissolves clarity around',
+  Pluto: 'intensifies and transforms',
+};
+
+// What each natal planet represents as a life area
+const NATAL_PLANET: Record<string, string> = {
+  Sun: 'your core identity and life direction',
+  Moon: 'your emotional life and inner needs',
+  Mercury: 'your thinking patterns and communication',
+  Venus: 'your relationships and sense of pleasure',
+  Mars: 'your drive, anger, and physical energy',
+  Jupiter: 'your growth, beliefs, and opportunities',
+  Saturn: 'your responsibilities and long-term structures',
+  Uranus: 'your independence and need for change',
+  Neptune: 'your imagination, spirituality, and blind spots',
+  Pluto: 'your deepest power and transformation process',
+};
+
+// How each aspect type colors the interaction
+const ASPECT_FLAVOR: Record<string, string> = {
+  conjunction: 'This is direct and personal. The transit planet merges with this part of you, making it impossible to ignore.',
+  sextile: 'This is a gentle opening. Opportunities appear if you reach for them, but nothing forces your hand.',
+  square: 'This creates friction you can feel. Something needs to change, and the pressure will not let up until you act.',
+  trine: 'This flows without effort. Doors open, things click into place, and progress feels natural.',
+  quincunx: 'This feels off. Two parts of your life that do not normally talk are forced into conversation. Adjustment is required.',
+  opposition: 'This comes through other people or external events. What you encounter outside mirrors something unresolved inside.',
+};
+
+// Specific overrides for notable transit combinations
+const TRANSIT_OVERRIDES: Record<string, string> = {
+  'Pluto-Sun': 'A defining period. Pluto transiting your Sun dismantles who you thought you were and rebuilds you. This is not subtle. Identity, power, and control are all on the table.',
+  'Pluto-Moon': 'Emotional intensity reaches a peak. Old patterns of safety and nurturing are exposed and transformed. What you need changes at a fundamental level.',
+  'Saturn-Sun': 'A reality check on your life direction. Saturn asks whether your path is built on solid ground. Effort is rewarded, shortcuts are not.',
+  'Saturn-Moon': 'Emotional maturity is being tested. You may feel isolated or burdened, but the work you do now on your inner life will last.',
+  'Saturn-Saturn': 'A Saturn return or major Saturn cycle. Life structures are evaluated. What works stays, what does not gets dismantled.',
+  'Uranus-Sun': 'Your sense of self is being rewired. Sudden changes in direction, identity shifts, and a need to break free from what no longer fits.',
+  'Uranus-Moon': 'Emotional restlessness and sudden shifts in what you need. Domestic life may be disrupted. Freedom becomes an emotional necessity.',
+  'Jupiter-Sun': 'A year of growth and confidence. Opportunities align with your identity. Good for starting things, but watch for overextension.',
+  'Jupiter-Jupiter': 'A Jupiter return. Your belief system and life philosophy are renewed. A cycle of expansion begins.',
+  'Neptune-Sun': 'Your boundaries blur. Identity feels less solid than usual. Creative and spiritual openings, but also confusion about who you are.',
+  'Neptune-Moon': 'Heightened sensitivity and empathy. Dreams are vivid, intuition is strong, but emotional boundaries need conscious maintenance.',
+  'Mars-Mars': 'A Mars return. Your energy and drive are recharged. Good for physical initiatives, but anger runs hotter than usual.',
+  'Venus-Venus': 'A Venus return. Relationships and pleasure reset. A good moment to evaluate what and who you truly value.',
+};
+
+// ---------------------------------------------------------------------------
 // Lookup functions
 // ---------------------------------------------------------------------------
 
@@ -296,4 +355,19 @@ export function getPlanetInHouseText(planet: string, house: number): string | nu
 
 export function getAspectText(aspectType: string): string | null {
   return ASPECT_TEXTS[aspectType] ?? null;
+}
+
+// Transit-specific interpretation combining transit planet, natal planet, and aspect type
+export function getTransitText(transitPlanet: string, natalPlanet: string, aspectType: string): string {
+  // Check for specific override first
+  const overrideKey = `${transitPlanet}-${natalPlanet}`;
+  const override = TRANSIT_OVERRIDES[overrideKey];
+  if (override) return override;
+
+  // Build from components
+  const action = TRANSIT_PLANET[transitPlanet] ?? 'interacts with';
+  const area = NATAL_PLANET[natalPlanet] ?? 'a part of your chart';
+  const flavor = ASPECT_FLAVOR[aspectType] ?? '';
+
+  return `Transit ${transitPlanet} ${action} ${area}. ${flavor}`;
 }
