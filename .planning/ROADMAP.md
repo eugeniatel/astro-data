@@ -32,7 +32,15 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Placidus house cusps are calculated correctly and match reference data for a standard test case, including a Reykjavik (64N) edge case producing valid output
   4. All 6 major aspects between natal planets are calculated with correct orbs
   5. Structured JSON output containing all planetary positions, house assignments, and aspects is produced for any valid birth data input
-**Plans**: TBD
+**Plans**: 6 plans
+
+Plans:
+- [ ] 01-01-PLAN.md -- Project scaffold: Vite + TypeScript + swisseph-wasm + vitest setup
+- [ ] 01-02-PLAN.md -- Type contracts: ChartData, Person, PlanetPosition, Aspect, all Phase 1 interfaces
+- [ ] 01-03-PLAN.md -- Ephemeris core: swisseph-wasm wrapper, Julian Day, planet positions, Placidus houses
+- [ ] 01-04-PLAN.md -- Aspect detection: pure function, all 6 aspects, orb rules, luminary bonus
+- [ ] 01-05-PLAN.md -- Geocoding pipeline: Photon (primary), cities.json fallback, manual entry
+- [ ] 01-06-PLAN.md -- ChartData assembler: wires all modules, integration test against Einstein chart
 
 ### Phase 2: ASCII Wheel Renderer
 **Goal**: A visually correct ASCII chart wheel can render any ChartData input, validated in isolation before integration with live data
@@ -108,7 +116,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Ephemeris Engine | 0/TBD | Not started | - |
+| 1. Ephemeris Engine | 0/6 | Planned | - |
 | 2. ASCII Wheel Renderer | 0/TBD | Not started | - |
 | 3. Natal Chart Screen | 0/TBD | Not started | - |
 | 4. People Management | 0/TBD | Not started | - |
