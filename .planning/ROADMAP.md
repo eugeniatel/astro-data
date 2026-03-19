@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Ephemeris Engine** - Accurate planetary calculations, house cusps, aspects, geocoding, and structured JSON output validated against a known reference chart
 - [x] **Phase 2: ASCII Wheel Renderer** - Custom ASCII circular chart wheel built and validated in isolation with hardcoded test data
 - [x] **Phase 3: Natal Chart Screen** - Full natal chart view wired to live data: Big Three header, split layout, planet table, aspect table
-- [ ] **Phase 4: People Management** - Terminal-style birth data entry flow, localStorage persistence, and the saved people list
+- [x] **Phase 4: People Management** - Terminal-style birth data entry flow, localStorage persistence, and the saved people list
 - [ ] **Phase 5: Natal Interpretations** - Static reference text for planet-in-sign, planet-in-house, and aspect placements, accessible from the chart view
 - [ ] **Phase 6: Transit System** - Transit overlay on the chart wheel, transit aspect list with reference interpretations, and date selection
 - [ ] **Phase 7: Terminal UX** - Animated landing screen, full keyboard navigation, first-time and return-visit flows, frequency sorting, and WebTUI aesthetic completeness
@@ -119,7 +119,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | 1. Ephemeris Engine | 6/6 | Complete | 2026-03-19 |
 | 2. ASCII Wheel Renderer | 1/1 | Complete | 2026-03-19 |
 | 3. Natal Chart Screen | 1/1 | Complete | 2026-03-19 |
-| 4. People Management | 0/TBD | Not started | - |
+| 4. People Management | 1/1 | Complete | 2026-03-19 |
 | 5. Natal Interpretations | 0/TBD | Not started | - |
 | 6. Transit System | 0/TBD | Not started | - |
 | 7. Terminal UX | 0/TBD | Not started | - |
