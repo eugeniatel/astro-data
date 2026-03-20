@@ -41,7 +41,7 @@ function injectStyles() {
 
     /* Landing */
     .landing { position: relative; width: 100%; height: 100vh; display: flex; flex-direction: column;
-      justify-content: center; align-items: center; overflow: hidden; }
+      justify-content: center; align-items: center; overflow: hidden; cursor: pointer; }
     .landing-text { position: relative; z-index: 1; text-align: center; }
     .landing-title {
       font-family: 'Press Start 2P', 'Silkscreen', monospace;
@@ -59,13 +59,10 @@ function injectStyles() {
     @keyframes pulse { 0%, 100% { opacity: 0.35; } 50% { opacity: 0.85; } }
 
     /* Chart screen */
-    .chart-screen { display: flex; gap: 24px; padding: 20px; min-height: 100vh; }
+    .chart-screen { display: flex; gap: 32px; padding: 24px; min-height: 100vh; align-items: flex-start; justify-content: center; }
     .chart-wheel { flex-shrink: 0; }
-    .chart-wheel pre {
-      font-size: 13px; line-height: 1.15; color: #888;
-      white-space: pre; font-family: inherit;
-    }
-    .chart-panels { flex: 1; min-width: 340px; display: flex; flex-direction: column; gap: 20px; }
+    .chart-wheel canvas { max-width: 480px; max-height: 480px; width: 100%; height: auto; }
+    .chart-panels { flex: 1; max-width: 420px; display: flex; flex-direction: column; gap: 24px; padding-top: 8px; }
 
     .big-three-header {
       text-transform: uppercase; line-height: 1.1;
@@ -272,7 +269,7 @@ async function main() {
 // ---------------------------------------------------------------------------
 function showLanding(app: HTMLElement) {
   app.innerHTML = `
-    <div class="landing">
+    <div class="landing" id="landing-tap">
       <div class="landing-text">
         <div class="landing-title">ASTRODATA</div>
         <div class="landing-sub">natal charts and transits</div>
@@ -280,6 +277,10 @@ function showLanding(app: HTMLElement) {
       </div>
     </div>
   `;
+  // Tap/click anywhere on landing to proceed (mobile support)
+  document.getElementById('landing-tap')?.addEventListener('click', () => {
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+  });
 }
 
 // ---------------------------------------------------------------------------
@@ -360,7 +361,7 @@ function showChart(app: HTMLElement, chartData: ChartData) {
 
   // Mount canvas wheel
   const container = document.getElementById('wheel-container')!;
-  const wheelCanvas = renderWheelCanvas(chartData, 560);
+  const wheelCanvas = renderWheelCanvas(chartData, 480);
   container.appendChild(wheelCanvas);
 }
 
