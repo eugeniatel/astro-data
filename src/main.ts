@@ -10,7 +10,7 @@ import { getState, setState } from './store/state';
 import { loadPeople, bumpUsage, sortByFrequency } from './store/persistence';
 import { renderWheelCanvas } from './render/wheel-canvas';
 import { renderPlanetTable, renderAspectTable } from './render/tables';
-import { renderTransitList, renderTransitPlanets } from './render/transit';
+import { renderTransitListHtml, renderTransitPlanets } from './render/transit';
 import { createGalaxy } from './ui/galaxy';
 import { OnboardingFlow } from './ui/onboarding';
 import type { Person, ChartData } from './engine/types';
@@ -114,8 +114,11 @@ function injectStyles() {
     .interp-entry .text { color: #666; font-size: 12px; margin-top: 2px; line-height: 1.5; }
 
     /* Transit screen */
-    .transit-screen { padding: 20px; }
+    .transit-screen { padding: 24px 40px; max-width: 800px; }
     .transit-screen pre { white-space: pre; font-family: inherit; font-size: 12px; color: #999; line-height: 1.5; }
+    .transit-entry { margin-bottom: 20px; }
+    .transit-entry-header { color: #aaa; font-size: 13px; font-weight: 600; }
+    .transit-entry-text { color: #777; font-size: 12px; line-height: 1.6; margin-top: 4px; word-wrap: break-word; white-space: normal; }
   `;
   document.head.appendChild(style);
 }
@@ -370,7 +373,7 @@ function showChart(app: HTMLElement, chartData: ChartData) {
 // ---------------------------------------------------------------------------
 function showTransit(app: HTMLElement, chartData: ChartData, transitData: import('./engine/transits').TransitData) {
   const positions = renderTransitPlanets(transitData);
-  const list = renderTransitList(transitData);
+  const transitHtml = renderTransitListHtml(transitData);
 
   app.innerHTML = `
     <div class="transit-screen">
@@ -378,9 +381,12 @@ function showTransit(app: HTMLElement, chartData: ChartData, transitData: import
         <span class="big-three-prefix">transits for</span>
         <span class="big-three-name">${chartData.person.name}</span>
       </div>
-      <div style="color:#555;font-size:13px;margin-bottom:20px">Date: ${transitData.date}</div>
+      <div style="color:#555;font-size:13px;margin-bottom:24px">Date: ${transitData.date}</div>
       <pre>${positions}</pre>
-      <pre style="margin-top:20px">${list}</pre>
+      <div style="margin-top:32px">
+        <div class="data-table-title">Active Transits</div>
+        ${transitHtml}
+      </div>
     </div>
     <div class="nav-bar">
       <span><kbd>B</kbd> Back to chart</span>

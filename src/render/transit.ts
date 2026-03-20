@@ -48,6 +48,27 @@ export function renderTransitList(transitData: TransitData): string {
   return lines.join('\n');
 }
 
+// Render transit list as HTML (with word wrapping)
+export function renderTransitListHtml(transitData: TransitData): string {
+  if (transitData.transitAspects.length === 0) {
+    return '<div style="color:#555;font-size:13px">No active transit aspects for this date.</div>';
+  }
+
+  let html = '';
+  for (const a of transitData.transitAspects) {
+    const sym = ASPECT_SYMBOLS[a.type] ?? ' ';
+    const typeName = a.type.charAt(0).toUpperCase() + a.type.slice(1);
+    const interp = getTransitText(a.planet1, a.planet2, a.type);
+
+    html += `<div class="transit-entry">`;
+    html += `<div class="transit-entry-header">Transit ${a.planet1} ${sym} ${typeName} Natal ${a.planet2} <span style="color:#444">(${a.orb.toFixed(1)}\u00B0)</span></div>`;
+    html += `<div class="transit-entry-text">${interp}</div>`;
+    html += `</div>`;
+  }
+
+  return html;
+}
+
 // Render transit planet positions summary
 export function renderTransitPlanets(transitData: TransitData): string {
   const lines: string[] = [];
