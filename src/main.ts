@@ -59,9 +59,9 @@ function injectStyles() {
     @keyframes pulse { 0%, 100% { opacity: 0.35; } 50% { opacity: 0.85; } }
 
     /* Chart screen */
-    .chart-screen { display: flex; padding: 24px 40px; min-height: 100vh; align-items: flex-start; justify-content: center; }
-    .chart-wheel { flex-shrink: 0; margin-right: 80px; }
-    .chart-panels { flex: 1; max-width: 420px; display: flex; flex-direction: column; gap: 24px; padding-top: 8px; }
+    .chart-screen { display: flex; padding: 0 40px; min-height: 100vh; align-items: center; justify-content: center; }
+    .chart-wheel { flex-shrink: 0; margin-right: 80px; display: flex; align-items: center; justify-content: center; }
+    .chart-panels { flex: 1; max-width: 420px; display: flex; flex-direction: column; gap: 24px; }
 
     .big-three-header {
       text-transform: uppercase; line-height: 1.1;
