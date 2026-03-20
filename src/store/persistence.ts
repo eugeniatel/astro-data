@@ -75,6 +75,20 @@ export function bumpUsage(id: string): void {
 }
 
 // ---------------------------------------------------------------------------
+// Pruning -- remove stale profiles (not viewed in 7 days, except "eugenia")
+// ---------------------------------------------------------------------------
+
+const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
+
+export function pruneStale(): void {
+  const now = Date.now();
+  const people = loadPeople().filter(p =>
+    p.name.toLowerCase() === 'eugenia' || (now - p.lastUsed) < SEVEN_DAYS_MS
+  );
+  savePeople(people);
+}
+
+// ---------------------------------------------------------------------------
 // Sorting
 // ---------------------------------------------------------------------------
 

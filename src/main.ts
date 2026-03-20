@@ -7,7 +7,7 @@ import { calculateChart } from './engine/chart';
 import { calculateTransits } from './engine/transits';
 import { Router } from './router';
 import { getState, setState } from './store/state';
-import { loadPeople, bumpUsage, sortByFrequency } from './store/persistence';
+import { loadPeople, bumpUsage, sortByFrequency, pruneStale, deletePerson } from './store/persistence';
 import { renderWheelCanvas } from './render/wheel-canvas';
 import { renderPlanetTable, renderAspectTable } from './render/tables';
 import { renderTransitListHtml, renderTransitPlanets } from './render/transit';
@@ -133,6 +133,9 @@ async function main() {
   app.innerHTML = '<div style="padding:40px;color:#333;font-size:13px">Initializing ephemeris...</div>';
   await initEphemeris();
 
+  // Remove profiles not viewed in the last 7 days (except "eugenia")
+  pruneStale();
+
   const router = new Router();
   let galaxyRef: { destroy: () => void } | null = null;
   let onboardingFlow: OnboardingFlow | null = null;
@@ -225,6 +228,13 @@ async function main() {
           } else {
             router.transition('NEW_PERSON');
           }
+        } else if (e.key === 'd' || e.key === 'D') {
+          if (state.navCursor < people.length) {
+            deletePerson(people[state.navCursor].id);
+            const updated = sortByFrequency(loadPeople());
+            setState({ navCursor: Math.min(state.navCursor, Math.max(0, updated.length - 1)) });
+            render();
+          }
         } else if (e.key === 'q' || e.key === 'Q') {
           router.transition('EXIT');
         }
@@ -303,7 +313,7 @@ function showPersonSelect(app: HTMLElement, people: Person[]) {
       <h2>Select a person</h2>
       ${items}
       <div class="person-new${newActive}">+ New person</div>
-      <div class="person-hint">Arrow keys to navigate, Enter to select</div>
+      <div class="person-hint">Arrow keys to navigate, Enter to select, D to delete</div>
     </div>
   `;
 }
