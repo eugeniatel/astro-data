@@ -363,7 +363,7 @@ function showChart(app: HTMLElement, chartData: ChartData) {
 
   // Mount canvas wheel
   const container = document.getElementById('wheel-container')!;
-  const wheelCanvas = renderWheelCanvas(chartData, 420);
+  const wheelCanvas = renderWheelCanvas(chartData, 520);
   container.appendChild(wheelCanvas);
 }
 
