@@ -283,62 +283,141 @@ const ASPECT_TEXTS: Record<string, string> = {
 };
 
 // ---------------------------------------------------------------------------
-// Transit interpretations (planet-pair specific)
+// Transit interpretations (100 planet-pair entries + aspect modifiers)
 // ---------------------------------------------------------------------------
 
-// What each transiting planet activates
-const TRANSIT_PLANET: Record<string, string> = {
-  Sun: 'illuminates and energizes',
-  Moon: 'stirs emotions around',
-  Mercury: 'brings mental focus to',
-  Venus: 'softens and attracts around',
-  Mars: 'pushes for action in',
-  Jupiter: 'expands and opens up',
-  Saturn: 'tests and solidifies',
-  Uranus: 'disrupts and awakens',
-  Neptune: 'dissolves clarity around',
-  Pluto: 'intensifies and transforms',
+// Each entry: what specifically happens when this transit planet contacts this natal planet.
+// Aspect type adds a modifier at the end (how the energy arrives).
+const TRANSIT_PAIRS: Record<string, string> = {
+  // --- Pluto transits (2-3 years per aspect, life-altering) ---
+  'Pluto-Sun': 'A defining period that can last years. Pluto strips away the parts of your identity that are performative or inherited rather than chosen. You may face power struggles, health crises, or complete career pivots. Who you are on the other side of this transit will not resemble who you were going in.',
+  'Pluto-Moon': 'Your emotional foundations are being excavated. Relationships with maternal figures or your own nurturing instincts undergo deep change. Suppressed feelings surface with force. Therapy, shadow work, or simply sitting with discomfort becomes necessary. Home and family life may transform entirely.',
+  'Pluto-Mercury': 'Your mind becomes obsessive, penetrating, and suspicious of surfaces. You may become fascinated with psychology, research, or hidden information. Communication can become manipulative if unconscious. Writing, investigating, or studying taboo subjects channels this well.',
+  'Pluto-Venus': 'Relationships become intense, possessive, or transformative. You may encounter a person who changes your entire value system, or an existing relationship undergoes a death-and-rebirth cycle. Jealousy, desire, and questions about what you truly want in love come to the surface.',
+  'Pluto-Mars': 'Your willpower and aggression are supercharged. This can manifest as relentless ambition, rage that surprises you, or physical confrontations. Channel this into demanding physical work, competitive pursuits, or tearing down something that needs rebuilding. Power struggles with men or authority figures are common.',
+  'Pluto-Jupiter': 'Ambition and vision expand dramatically. You may gain significant wealth, influence, or status, but the methods matter. Corruption tempts. Legal, religious, or philosophical conflicts can escalate. At best, you become a force for deep, principled change in your field.',
+  'Pluto-Saturn': 'The structures you have built are stress-tested to destruction. Career, reputation, and long-term commitments either prove their worth or collapse. This is one of the hardest transits: slow, grinding, and unavoidable. What survives this period is genuinely solid.',
+  'Pluto-Uranus': 'A generational transit. Revolutionary impulses intensify. Technology, politics, or social movements may disrupt your life in ways you cannot control. Personal freedom and collective power dynamics collide. Stay flexible; rigidity breaks under this pressure.',
+  'Pluto-Neptune': 'A generational transit affecting your relationship to spirituality, imagination, and collective illusions. Belief systems dissolve and reform. Artistic or spiritual experiences can be profoundly transformative. Watch for deception at scale.',
+  'Pluto-Pluto': 'A generational milestone (square in your 30s-40s, trine later). You confront the power dynamics embedded in your generation. Personal empowerment through accepting mortality, loss, or the limits of control. Deep psychological growth.',
+
+  // --- Neptune transits (1-2 years per aspect, dissolving and confusing) ---
+  'Neptune-Sun': 'Your sense of self becomes porous. You may feel lost, inspired, or both. Creative and spiritual life flourishes, but practical matters suffer from lack of clarity. Others may project fantasies onto you. Identity fraud or health misdiagnoses are possible. Trust your intuition but verify facts.',
+  'Neptune-Moon': 'Emotional sensitivity reaches extraordinary levels. You absorb the moods of everyone around you. Dreams are vivid and sometimes prophetic. Boundaries with family members blur. Addiction risks increase as you seek escape from overwhelming feelings. Music, water, and solitude heal.',
+  'Neptune-Mercury': 'Clear thinking becomes difficult. You may misread messages, sign confusing contracts, or forget important details. But your imagination and poetic sensibility peak. Writing fiction, learning music, or studying spiritual traditions channels this beautifully. Avoid major business decisions.',
+  'Neptune-Venus': 'Romance becomes idealized and otherworldly. You may fall for someone unavailable, imaginary, or deceptive. Existing relationships either transcend to a new level of compassion or reveal painful truths you had been ignoring. Art and beauty become necessary rather than optional.',
+  'Neptune-Mars': 'Your drive and aggression dissolve. Actions feel pointless or directionless. Physical energy is low. Passive-aggressive tendencies increase. Channel this into dance, swimming, martial arts with a spiritual component, or any action motivated by compassion rather than ego.',
+  'Neptune-Jupiter': 'Idealism and faith expand, sometimes dangerously. You may take on charitable causes, spiritual quests, or educational pursuits with boundless optimism. The risk is overextension and gullibility. Not every guru, investment, or "sure thing" is what it claims.',
+  'Neptune-Saturn': 'Your carefully built structures face an erosion test. Responsibilities feel meaningless or overwhelming. Career goals may shift from material to spiritual. This transit asks: are your ambitions genuinely yours, or are they someone else\'s expectations? Disillusionment serves a purpose.',
+  'Neptune-Uranus': 'A generational transit. The boundary between technology and mysticism blurs. Innovation takes spiritual or artistic forms. Collective visions of the future shift. Personally, your need for freedom may express through spiritual or creative channels.',
+  'Neptune-Neptune': 'A Neptune square (around age 41) or other major Neptune cycle. Your entire relationship to meaning, faith, and imagination is restructured. Midlife spiritual crises belong here. What you believed at 20 no longer sustains you. Something more honest must replace it.',
+  'Neptune-Pluto': 'A generational transit. Deep collective unconscious material surfaces through culture, art, and politics. Personally, your relationship to power and transformation takes on a mystical quality. Hidden motivations become visible through dreams or synchronicities.',
+
+  // --- Uranus transits (1 year per aspect, sudden and liberating) ---
+  'Uranus-Sun': 'Your identity is being rewired from the inside out. Sudden changes in career, appearance, or life direction feel both thrilling and destabilizing. You may leave a marriage, quit a career, or reinvent yourself in ways that shock people who thought they knew you. The key is not to resist the authentic impulse.',
+  'Uranus-Moon': 'Emotional life becomes unpredictable. Your needs change suddenly: what felt safe now feels suffocating. Moves, domestic upheavals, or shifts in family dynamics happen without warning. Women in your life may act erratically. Freedom becomes an emotional rather than intellectual priority.',
+  'Uranus-Mercury': 'Your thinking accelerates and becomes unconventional. Breakthrough ideas arrive suddenly. You may become interested in technology, astrology, or radical viewpoints. Communication style changes. Nervous system is overstimulated; insomnia and anxiety are possible. Write down the insights that come at 3am.',
+  'Uranus-Venus': 'Relationships are electrified. You may fall for someone completely unlike your usual type, or an existing relationship either evolves dramatically or ends abruptly. Your aesthetic tastes change. Financial surprises (positive or negative) are possible. Boredom in love becomes intolerable.',
+  'Uranus-Mars': 'Impulsive energy spikes. Accidents are more likely when you act without thinking. But calculated risks pay off unusually well. Your physical routine needs radical change. Competitive drive is erratic: brilliant one day, completely absent the next. Avoid unnecessary confrontations.',
+  'Uranus-Jupiter': 'Opportunities appear from nowhere and disappear just as fast. Travel, education, and belief systems undergo rapid expansion. You may receive sudden lucky breaks or take gambles that pay off. Restlessness with conventional paths peaks. Entrepreneurial energy is strong.',
+  'Uranus-Saturn': 'Tension between stability and freedom reaches a breaking point. The structures in your life (career, marriage, routines) are tested by sudden events. What is rigid cracks. What is flexible adapts. This transit forces necessary modernization of outdated commitments.',
+  'Uranus-Uranus': 'A Uranus cycle transit (opposition around age 42, return at 84). At the opposition, you confront whether your life reflects your authentic self or a compromise you made decades ago. Midlife rebellion is the cliche; midlife liberation is the goal.',
+  'Uranus-Neptune': 'A generational transit. The collective imagination is disrupted. Technology and spirituality merge in unexpected ways. Personally, your ideals and dreams undergo sudden revision. What inspired you before may suddenly seem naive, replaced by a sharper vision.',
+  'Uranus-Pluto': 'A generational transit with personal power. Revolutionary energy meets transformative force. You may become involved in movements for radical change, or experience sudden power shifts in your personal life. Control is an illusion during this transit; adaptability is survival.',
+
+  // --- Saturn transits (6-9 months per aspect, testing and maturing) ---
+  'Saturn-Sun': 'A reality check on your entire life direction. Energy is lower than usual. Achievements require more effort for less recognition. Authority figures scrutinize your work. But the discipline you build now creates lasting success. This is the transit of earning what you get.',
+  'Saturn-Moon': 'Emotional life feels heavy, restricted, or lonely. Relationships with women or family members are tested. You may take on caregiving responsibilities. Depression is possible if you suppress feelings. The work is to build emotional resilience without becoming cold.',
+  'Saturn-Mercury': 'Thinking becomes serious, methodical, and pessimistic. Communication is measured; you say less but mean more. Good for studying, writing non-fiction, or organizing information. Bad for spontaneous creativity. Mental burdens feel heavy. Structure your learning.',
+  'Saturn-Venus': 'Relationships are tested for durability. Superficial connections fall away. You may feel unloved, unattractive, or financially constrained. But partnerships that survive this transit are genuinely committed. New relationships that begin now tend to be serious from the start.',
+  'Saturn-Mars': 'Your energy and initiative are frustrated by obstacles, delays, or authority. Anger simmers but cannot find release. Physical effort produces slow results. Patience with physical limitations is required. Disciplined training (not just raw effort) is the key.',
+  'Saturn-Jupiter': 'Expansion meets restriction. Growth plans are delayed, scaled back, or forced to become practical. Optimism gives way to realism. Business plans that survive Saturn-Jupiter are the ones worth pursuing. This transit separates genuine opportunity from wishful thinking.',
+  'Saturn-Saturn': 'The Saturn return (ages 28-30, 57-59) or other Saturn cycle. Your entire life structure is audited. Career, relationships, and commitments that do not serve your actual path are dismantled. This is one of the most important transits in a lifetime. What you build in its wake defines your next chapter.',
+  'Saturn-Uranus': 'Freedom and responsibility collide. You want to break free, but obligations hold you. Or external disruptions threaten your stability. The resolution is finding a way to innovate within structure, not abandoning responsibility or suppressing your need for change.',
+  'Saturn-Neptune': 'Your ideals are reality-tested. Dreams that cannot survive practical scrutiny dissolve. This feels like disillusionment but is actually clarification. Spiritual practices that include discipline (meditation, fasting, study) thrive. Escapism is punished.',
+  'Saturn-Pluto': 'One of the most demanding transits. Power structures in your life are tested to their limits. You may face institutional opposition, profound loss, or situations where endurance is the only option. What you refuse to let break becomes your greatest source of authority.',
+
+  // --- Jupiter transits (1-2 months per aspect, expanding and optimistic) ---
+  'Jupiter-Sun': 'Confidence, vitality, and opportunity peak. Doors open that align with who you actually are. Good for launching projects, seeking promotion, or expanding your public role. The risk is overconfidence and overcommitment. Say yes to the right things, not everything.',
+  'Jupiter-Moon': 'Emotional generosity and domestic expansion. You may move to a larger home, welcome someone into your family, or feel unusually content. Relationships with women are supportive. Comfort-seeking increases: watch for weight gain or overindulgence as emotional soothing.',
+  'Jupiter-Mercury': 'Thinking goes big. Travel, education, publishing, and communication projects flourish. Your ideas reach a wider audience. Contracts and negotiations favor you. The risk is promising more than you can deliver or spreading your attention too thin.',
+  'Jupiter-Venus': 'Love and money flow more easily. New relationships begun now tend to be beneficial. Social life expands. Art, beauty, and pleasure are emphasized. Financial gains are possible through partnerships. The risk is extravagance and taking good fortune for granted.',
+  'Jupiter-Mars': 'Energy, confidence, and competitive drive surge. Physical activities go well. Business initiatives, athletic pursuits, and assertive moves are favored. Courage is rewarded. The risk is recklessness, arrogance, or overestimating your physical capacity.',
+  'Jupiter-Jupiter': 'A Jupiter return (every 12 years). Your belief system, sense of meaning, and growth trajectory reset. The vision you form now guides the next 12-year cycle. Travel, education, and philosophical exploration are highlighted. Ask: what do I actually believe?',
+  'Jupiter-Saturn': 'A productive period where expansion and discipline find balance. Long-term plans advance concretely. Business growth is sustainable rather than speculative. Authority figures support your ambitions. Building something that lasts is the theme.',
+  'Jupiter-Uranus': 'Sudden opportunities and lucky breaks. Your need for freedom and growth align unexpectedly. Travel, technology, and unconventional paths are favored. Breakthroughs in understanding arrive as flashes of insight. Act on good ideas quickly; the window is brief.',
+  'Jupiter-Neptune': 'Imagination, spirituality, and creative vision expand enormously. Compassion deepens. Charitable impulses are strong. But discernment weakens: not every vision is viable, and not every cause deserves your resources. Inspired but not delusional is the target.',
+  'Jupiter-Pluto': 'Ambition and power expand. You may gain significant influence, wealth, or status. Research, investment, and strategic moves are favored. The ethical dimension matters: power gained through integrity compounds; power gained through manipulation collapses later.',
+
+  // --- Mars transits (3-5 days per aspect, energizing and activating) ---
+  'Mars-Sun': 'A burst of vitality and assertiveness lasting a few days. Good for starting projects, having difficult conversations, or physical competition. Ego conflicts are possible. You feel more alive but also more combative. Channel the energy before it channels itself.',
+  'Mars-Moon': 'Emotions become sharp, reactive, and physical. You feel things in your body: gut reactions, tension, restless energy. Arguments with family or women are possible. Domestic projects benefit from the energy. Cook, clean, exercise, or do something physical with your feelings.',
+  'Mars-Mercury': 'Thinking accelerates and becomes argumentative. Debates are stimulating but can escalate. Good for focused mental work, writing with urgency, or solving problems that require sharp thinking. Bad for diplomacy. Words cut deeper than intended.',
+  'Mars-Venus': 'Desire, attraction, and social energy spike. Good for dates, creative projects, and anything requiring charm with edge. Spending impulses are strong. Sexual energy is high. Existing relationships get a spark of passion or friction, depending on their health.',
+  'Mars-Mars': 'A Mars return (every 2 years). Your physical energy, drive, and anger reset. The way you assert yourself is recalibrated. New physical routines, competitive goals, or assertiveness patterns begin. A good time to start training programs or confrontational projects.',
+  'Mars-Jupiter': 'Enthusiasm and physical energy combine. Bold moves are favored. Travel, sports, and entrepreneurial action go well. You feel invincible, which is mostly accurate but watch for overreach. Generosity with your energy is rewarded.',
+  'Mars-Saturn': 'Action meets resistance. Everything takes more effort and produces less visible result. Frustration with authority or rules simmers. Patience and disciplined effort are required. Physical strain or injury from pushing too hard is a risk. Slow is fast here.',
+  'Mars-Uranus': 'Impulsive, erratic energy. Accidents happen when you rush. But sudden decisive action in the right moment can produce breakthrough results. Your need for independence becomes physical and urgent. Routine feels unbearable. Release the pressure safely.',
+  'Mars-Neptune': 'Energy dissolves into confusion or idealism. Physical vitality drops. Actions motivated by compassion or creativity go well; actions motivated by ego or competition fail. Passive-aggressive behavior increases. Swimming, yoga, or artistic work channels this better than confrontation.',
+  'Mars-Pluto': 'Willpower is enormous but volatile. You can accomplish things through sheer force of determination that would normally be impossible. But rage, obsession, and power struggles are equally likely. This is raw power: dangerous if unconscious, transformative if directed.',
+
+  // --- Venus transits (2-3 days per aspect, pleasant and social) ---
+  'Venus-Sun': 'A few days of increased attractiveness, social ease, and creative energy. Good for dates, presentations, shopping, and anything where making a good impression matters. You feel more beautiful and receive more compliments than usual.',
+  'Venus-Moon': 'Emotional warmth and comfort. A pleasant few days for domestic life, family gatherings, and nurturing relationships. Cooking, decorating, and self-care feel especially satisfying. Nostalgia and sentimentality are heightened.',
+  'Venus-Mercury': 'Communication becomes charming and diplomatic. Good for writing love letters, negotiating, and social networking. Conversations are pleasant and productive. Aesthetic appreciation is heightened: good day for art, music, or design work.',
+  'Venus-Venus': 'A Venus return (yearly). Your relationship patterns, aesthetic preferences, and value system refresh. A good day to evaluate what you love, what you find beautiful, and whether your spending aligns with your actual values.',
+  'Venus-Mars': 'Attraction and desire are stimulated. Romantic and sexual energy is high. Creative projects that combine beauty with action thrive. Social confidence peaks. A good time to ask for what you want in relationships.',
+  'Venus-Jupiter': 'Generosity, optimism, and social pleasure expand. A lovely few days for parties, travel, and indulgence. Financial luck is slightly better than average. The risk is overspending or overindulging. Enjoy the abundance without excess.',
+  'Venus-Saturn': 'Relationships feel serious or heavy. You evaluate love and friendship with a critical eye. Loneliness or distance from others is possible. But commitments made or reaffirmed now are solid. Beauty that lasts requires structure.',
+  'Venus-Uranus': 'Attraction to the unusual. You may meet someone exciting or experience a sudden shift in what you find appealing. Existing relationships need fresh stimulation. Routine in love becomes intolerable. Financial surprises (positive or negative) are possible.',
+  'Venus-Neptune': 'Romance is dreamy and idealized. Artistic and musical sensitivity peaks. You see beauty everywhere. But you may also see beauty where it is not: be cautious about new relationships and financial decisions. Enjoy the inspiration without committing to illusions.',
+  'Venus-Pluto': 'Desire becomes intense and obsessive. Relationships deepen or reveal hidden dynamics. Jealousy, possessiveness, and magnetic attraction are all possible. Financial power plays may occur. The encounter that happens now, however brief, leaves a mark.',
+
+  // --- Mercury transits (1-2 days per aspect, mental and communicative) ---
+  'Mercury-Sun': 'A day or two of mental clarity about your identity and direction. Good for self-reflection, personal branding, and communicating who you are. Ideas about your path crystallize. Conversations about your future are productive.',
+  'Mercury-Moon': 'Thinking and feeling connect. Good for journaling, therapy sessions, and emotional conversations. You can articulate feelings that usually stay vague. Memory is strong. Conversations with family or about domestic matters are productive.',
+  'Mercury-Mercury': 'A Mercury return (3-4 times per year). Your communication style and thinking patterns refresh. Good for writing, speaking, and intellectual projects. New ideas flow easily. Revisit projects that stalled due to unclear thinking.',
+  'Mercury-Venus': 'Pleasant communication. Good for love letters, social media, negotiation, and any conversation where charm matters. Aesthetic decisions come easily. Shopping is satisfying. Words are diplomatic and well-received.',
+  'Mercury-Mars': 'Sharp, assertive thinking. Good for debates, competitive writing, and solving problems that require aggressive mental focus. Bad for sensitive conversations. Words come out more cutting than intended. Channel the mental energy into productive argumentation.',
+  'Mercury-Jupiter': 'Big-picture thinking. Good for planning, teaching, publishing, and legal matters. Your ideas reach a wider context. Optimism colors your thinking, which can be inspiring or unrealistic. Travel communication goes well.',
+  'Mercury-Saturn': 'Thinking becomes heavy, practical, and pessimistic. Good for detailed work, editing, contracts, and any task requiring precision over inspiration. Conversations feel burdensome. Focus on getting the hard mental work done; creativity returns later.',
+  'Mercury-Uranus': 'Sudden insights and unconventional ideas. Your mind works faster than usual and makes unexpected connections. Good for brainstorming, technology work, and breaking out of mental ruts. Nervous energy is high. The idea that arrives out of nowhere may be brilliant.',
+  'Mercury-Neptune': 'Thinking becomes dreamy, unfocused, and imaginative. Poor for contracts, detailed work, and fact-checking. Excellent for creative writing, music, and meditation. Miscommunication is likely. Read important messages twice before responding.',
+  'Mercury-Pluto': 'Mental intensity peaks. You see through lies and surface explanations. Good for research, investigation, therapy, and any conversation that needs to go deep. Obsessive thinking is possible. You may say something that cannot be unsaid.',
+
+  // --- Sun transits (1-2 days per aspect, highlighting and energizing) ---
+  'Sun-Sun': 'Your solar return (birthday). The year ahead is seeded. Your vitality, purpose, and identity are renewed. How you feel on this day and the days around it often sets the tone for the coming year.',
+  'Sun-Moon': 'A spotlight on your emotional needs and domestic life. The tension or harmony between what you want (Sun) and what you need (Moon) becomes visible. A good day for honest self-reflection about your inner state.',
+  'Sun-Mercury': 'Mental energy and self-expression align. Good for presentations, writing, and any communication where you need to be both clear and authentic. Your ideas get noticed. Short trips and conversations are energized.',
+  'Sun-Venus': 'A day of increased social appeal, romantic opportunity, and creative energy. People notice your charm. Good for dates, art, shopping, and anything where beauty or connection matters. Financial gains through social connections are possible.',
+  'Sun-Mars': 'Energy and assertiveness spike for a day or two. Good for physical activity, competition, and taking initiative. Ego conflicts with men or authority figures are possible. The fire needs somewhere to go: choose a target before it finds one.',
+  'Sun-Jupiter': 'Optimism, generosity, and opportunity converge briefly. A good day for big decisions, travel plans, and expanding your reach. Everything feels possible, and more of it actually is than usual. Enjoy the confidence without overcommitting.',
+  'Sun-Saturn': 'A day of heaviness, responsibility, and reality. Tasks feel harder and rewards feel smaller. But the work you do today holds. Authority figures may criticize or test you. Rise to it; this earns lasting respect.',
+  'Sun-Uranus': 'A day of surprises, restlessness, and the need to break free from routine. Unexpected events disrupt plans but may lead somewhere better. Your individuality demands expression. Do something you have never done before.',
+  'Sun-Neptune': 'A day of dreaminess, sensitivity, and blurred boundaries. Creativity and compassion are heightened. Practical matters suffer from lack of focus. A good day for art, meditation, or helping someone. A bad day for contracts and major decisions.',
+  'Sun-Pluto': 'Intensity peaks for a day. Power dynamics surface in relationships or at work. You may feel driven to control a situation or discover something hidden. Encounters are meaningful even if brief. Let go of what no longer serves you.',
+
+  // --- Moon transits (hours, not days - fastest moving) ---
+  'Moon-Sun': 'A few hours of emotional clarity about your identity and direction. Your feelings and your purpose align or clash noticeably. Brief but telling: pay attention to what surfaces.',
+  'Moon-Moon': 'A lunar return (monthly). Your emotional baseline resets. How you feel today reflects your emotional truth for the coming month. Domestic and family themes are highlighted.',
+  'Moon-Mercury': 'Emotions and thoughts connect for a few hours. Good for journaling, emotional conversations, and processing feelings through words. Your instincts inform your thinking more than usual.',
+  'Moon-Venus': 'A few hours of emotional warmth, social pleasure, and comfort-seeking. Good for connecting with loved ones, comfort food, and beauty. Brief but genuinely pleasant.',
+  'Moon-Mars': 'Emotional reactivity spikes briefly. Irritability, impatience, and gut-level responses to provocation. A brief transit but it can trigger arguments if you are not aware of the heightened sensitivity. Physical activity helps.',
+  'Moon-Jupiter': 'A few hours of emotional generosity and optimism. You feel expansive, caring, and hopeful. Good for socializing and domestic warmth. Brief but genuinely uplifting.',
+  'Moon-Saturn': 'A few hours of emotional heaviness or loneliness. Responsibilities weigh on your mood. Not the time for emotional risks. Brief but can color your whole day if you let it. Structure and discipline help.',
+  'Moon-Uranus': 'Emotional restlessness and sudden mood shifts. You crave excitement and react against routine. Brief but potentially disruptive if you act on impulse. Let the feeling pass before making decisions.',
+  'Moon-Neptune': 'A few hours of heightened sensitivity, dreaminess, and emotional absorption. Your boundaries are thin. Good for creative work and meditation. Bad for confrontation. Brief but potent for artists.',
+  'Moon-Pluto': 'Emotional intensity surges briefly. Deep feelings surface: jealousy, desire, grief, or power needs. Interactions feel heavy and meaningful. A few hours that can reveal what you usually keep buried.',
 };
 
-// What each natal planet represents as a life area
-const NATAL_PLANET: Record<string, string> = {
-  Sun: 'your core identity and life direction',
-  Moon: 'your emotional life and inner needs',
-  Mercury: 'your thinking patterns and communication',
-  Venus: 'your relationships and sense of pleasure',
-  Mars: 'your drive, anger, and physical energy',
-  Jupiter: 'your growth, beliefs, and opportunities',
-  Saturn: 'your responsibilities and long-term structures',
-  Uranus: 'your independence and need for change',
-  Neptune: 'your imagination, spirituality, and blind spots',
-  Pluto: 'your deepest power and transformation process',
-};
-
-// How each aspect type colors the interaction
-const ASPECT_FLAVOR: Record<string, string> = {
-  conjunction: 'This is direct and personal. The transit planet merges with this part of you, making it impossible to ignore.',
-  sextile: 'This is a gentle opening. Opportunities appear if you reach for them, but nothing forces your hand.',
-  square: 'This creates friction you can feel. Something needs to change, and the pressure will not let up until you act.',
-  trine: 'This flows without effort. Doors open, things click into place, and progress feels natural.',
-  quincunx: 'This feels off. Two parts of your life that do not normally talk are forced into conversation. Adjustment is required.',
-  opposition: 'This comes through other people or external events. What you encounter outside mirrors something unresolved inside.',
-};
-
-// Specific overrides for notable transit combinations
-const TRANSIT_OVERRIDES: Record<string, string> = {
-  'Pluto-Sun': 'A defining period. Pluto transiting your Sun dismantles who you thought you were and rebuilds you. This is not subtle. Identity, power, and control are all on the table.',
-  'Pluto-Moon': 'Emotional intensity reaches a peak. Old patterns of safety and nurturing are exposed and transformed. What you need changes at a fundamental level.',
-  'Saturn-Sun': 'A reality check on your life direction. Saturn asks whether your path is built on solid ground. Effort is rewarded, shortcuts are not.',
-  'Saturn-Moon': 'Emotional maturity is being tested. You may feel isolated or burdened, but the work you do now on your inner life will last.',
-  'Saturn-Saturn': 'A Saturn return or major Saturn cycle. Life structures are evaluated. What works stays, what does not gets dismantled.',
-  'Uranus-Sun': 'Your sense of self is being rewired. Sudden changes in direction, identity shifts, and a need to break free from what no longer fits.',
-  'Uranus-Moon': 'Emotional restlessness and sudden shifts in what you need. Domestic life may be disrupted. Freedom becomes an emotional necessity.',
-  'Jupiter-Sun': 'A year of growth and confidence. Opportunities align with your identity. Good for starting things, but watch for overextension.',
-  'Jupiter-Jupiter': 'A Jupiter return. Your belief system and life philosophy are renewed. A cycle of expansion begins.',
-  'Neptune-Sun': 'Your boundaries blur. Identity feels less solid than usual. Creative and spiritual openings, but also confusion about who you are.',
-  'Neptune-Moon': 'Heightened sensitivity and empathy. Dreams are vivid, intuition is strong, but emotional boundaries need conscious maintenance.',
-  'Mars-Mars': 'A Mars return. Your energy and drive are recharged. Good for physical initiatives, but anger runs hotter than usual.',
-  'Venus-Venus': 'A Venus return. Relationships and pleasure reset. A good moment to evaluate what and who you truly value.',
+// How each aspect type modifies the delivery of the transit
+const ASPECT_MODIFIER: Record<string, string> = {
+  conjunction: '',
+  sextile: 'This arrives as an opportunity rather than a demand. You have to reach for it.',
+  square: 'This arrives as pressure. Something needs to shift, and comfort is not an option until it does.',
+  trine: 'This arrives easily. The energy flows without resistance, almost too smoothly to notice.',
+  quincunx: 'This arrives as an awkward misalignment. Two parts of your life need adjustment that neither is naturally inclined to make.',
+  opposition: 'This arrives through other people or external events. The mirror is outside you.',
 };
 
 // ---------------------------------------------------------------------------
@@ -357,17 +436,16 @@ export function getAspectText(aspectType: string): string | null {
   return ASPECT_TEXTS[aspectType] ?? null;
 }
 
-// Transit-specific interpretation combining transit planet, natal planet, and aspect type
+// Transit-specific interpretation using planet-pair entries + aspect modifier
 export function getTransitText(transitPlanet: string, natalPlanet: string, aspectType: string): string {
-  // Check for specific override first
-  const overrideKey = `${transitPlanet}-${natalPlanet}`;
-  const override = TRANSIT_OVERRIDES[overrideKey];
-  if (override) return override;
+  const key = `${transitPlanet}-${natalPlanet}`;
+  const pairText = TRANSIT_PAIRS[key];
+  const modifier = ASPECT_MODIFIER[aspectType] ?? '';
 
-  // Build from components
-  const action = TRANSIT_PLANET[transitPlanet] ?? 'interacts with';
-  const area = NATAL_PLANET[natalPlanet] ?? 'a part of your chart';
-  const flavor = ASPECT_FLAVOR[aspectType] ?? '';
+  if (pairText) {
+    return modifier ? `${pairText} ${modifier}` : pairText;
+  }
 
-  return `Transit ${transitPlanet} ${action} ${area}. ${flavor}`;
+  // Fallback for any pairs not covered
+  return `Transit ${transitPlanet} contacts your natal ${natalPlanet}. ${modifier}`;
 }

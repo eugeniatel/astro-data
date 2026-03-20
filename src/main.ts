@@ -59,7 +59,7 @@ function injectStyles() {
     @keyframes pulse { 0%, 100% { opacity: 0.35; } 50% { opacity: 0.85; } }
 
     /* Chart screen */
-    .chart-screen { display: flex; gap: 32px; padding: 24px; min-height: 100vh; align-items: flex-start; justify-content: center; }
+    .chart-screen { display: flex; gap: 60px; padding: 24px 40px; min-height: 100vh; align-items: flex-start; justify-content: center; }
     .chart-wheel { flex-shrink: 0; }
     .chart-wheel canvas { max-width: 480px; max-height: 480px; width: 100%; height: auto; }
     .chart-panels { flex: 1; max-width: 420px; display: flex; flex-direction: column; gap: 24px; padding-top: 8px; }
